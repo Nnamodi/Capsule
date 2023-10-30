@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Capsule</string>
+    <string name="back_icon_desc">Back</string>
+    <string name="video">Video</string>
+    <string name="notes">Notes</string>
+    <string name="quiz">Quiz</string>
+    <string name="note_title">Note title</string>
+    <string name="note_body">Note body</string>
+    <string name="up_next">Up Next:</string>
+    <string name="quiz_test">Quiz Test</string>
+    <string name="ten_questions">Questions: 10</string>
+    <string name="notes_description">Read more about topic</string>
 </resources>

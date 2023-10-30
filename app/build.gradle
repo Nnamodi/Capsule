@@ -80,6 +80,7 @@ dependencies {
 	// media_lib
 	implementation media3.exoplayer
 	implementation media3.session
+	implementation media3.ui
 
 	// navigation
 	implementation navigation.compose

@@ -42,7 +42,8 @@ buildscript {
 		]
 		media3 = [
 			exoplayer : "androidx.media3:media3-exoplayer:${versions.media3}",
-			session : "androidx.media3:media3-session:${versions.media3}"
+			session : "androidx.media3:media3-session:${versions.media3}",
+			ui : "androidx.media3:media3-ui:${versions.media3}"
 		]
 		navigation = [
 			compose : "androidx.navigation:navigation-compose:${versions.navigation}"
