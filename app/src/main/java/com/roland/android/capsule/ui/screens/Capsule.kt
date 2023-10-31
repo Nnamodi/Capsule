@@ -15,16 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.roland.android.capsule.R
-import com.roland.android.capsule.data.previewQuestions
-import com.roland.android.capsule.ui.theme.CapsuleTheme
+import com.roland.android.capsule.data.UiState
 import com.roland.android.capsule.ui.theme.light_outline
+import com.roland.android.capsule.util.Actions
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun CapsuleTabs() {
+fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
 	Scaffold(
 		topBar = {
 			TopAppBar(title = { Text(stringResource(R.string.app_name)) })
@@ -57,7 +56,7 @@ fun CapsuleTabs() {
 				when (page) {
 					0 -> VideoScreen { scrollToPage(null) }
 					1 -> NotesScreen { scrollToPage(null) }
-					2 -> QuizScreen(previewQuestions, 2)
+					2 -> QuizScreen(uiState, actions)
 					3 -> ResultScreen()
 					else -> {}
 				}
@@ -71,12 +70,4 @@ private enum class CapsuleTabs(val nameRes: Int) {
 	Notes(R.string.notes),
 	Quiz(R.string.quiz),
 	QuizResult(R.string.quiz_result)
-}
-
-@Preview
-@Composable
-private fun CapsuleTabsPreview() {
-	CapsuleTheme {
-		CapsuleTabs()
-	}
 }

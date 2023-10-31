@@ -20,10 +20,8 @@ import androidx.compose.material.icons.rounded.LiveHelp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,23 +30,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
-import com.roland.android.capsule.data.Questions
-import com.roland.android.capsule.data.previewQuestions
+import com.roland.android.capsule.data.UiState
+import com.roland.android.capsule.data.questions
 import com.roland.android.capsule.ui.components.CustomIconButton
 import com.roland.android.capsule.ui.components.Option
 import com.roland.android.capsule.ui.components.QuestionsTag
 import com.roland.android.capsule.ui.theme.CapsuleTheme
+import com.roland.android.capsule.util.Actions
 
 @Composable
 fun QuizScreen(
-	questions: List<Questions>,
-	currentQuestionId: Int
+	uiState: UiState,
+	actions: (Actions) -> Unit
 ) {
-	val currentQuestion by remember(currentQuestionId) {
-		derivedStateOf { questions[currentQuestionId] }
-	}
+	val (questions, currentQuestion) = uiState
 	val options = listOf(currentQuestion.option1, currentQuestion.option2, currentQuestion.option3, currentQuestion.option4)
-	var selectedOption by rememberSaveable { mutableStateOf("") }
+	var selectedOption by rememberSaveable(currentQuestion) { mutableStateOf(currentQuestion.selectedOption) }
 
 	Column(
 		modifier = Modifier
@@ -65,7 +62,8 @@ fun QuizScreen(
 				modifier = Modifier
 					.fillMaxHeight()
 					.weight(1f),
-				currentQuestionId = currentQuestionId
+				currentQuestionId = currentQuestion.id + 1,
+				numberOfQuestions = questions.size
 			)
 			Spacer(Modifier.width(10.dp))
 			CustomIconButton(
@@ -86,7 +84,7 @@ fun QuizScreen(
 				)
 		) {
 			Text(
-				text = stringResource(R.string.question, currentQuestionId, questions[currentQuestionId].question),
+				text = stringResource(R.string.question, (currentQuestion.id + 1), currentQuestion.question),
 				modifier = Modifier.padding(10.dp),
 				style = MaterialTheme.typography.headlineSmall
 			)
@@ -110,17 +108,17 @@ fun QuizScreen(
 				.padding(bottom = 20.dp)
 		) {
 			CustomIconButton(
-				onClick = {},
+				onClick = { actions(Actions.PreviousQuestion) },
 				contentDescription = stringResource(R.string.prev_button),
 				icon = Icons.Rounded.ArrowBackIosNew,
-				enabled = currentQuestionId > 1
+				enabled = currentQuestion.id > 0
 			)
 			Spacer(Modifier.weight(1f))
 			CustomIconButton(
-				onClick = {},
+				onClick = { actions(Actions.NextQuestion) },
 				contentDescription = stringResource(R.string.next_button),
 				icon = Icons.Rounded.ArrowForwardIos,
-				enabled = currentQuestionId < 10
+				enabled = currentQuestion.id < (questions.size - 1)
 			)
 		}
 	}
@@ -130,6 +128,6 @@ fun QuizScreen(
 @Composable
 fun QuizScreenPreview() {
 	CapsuleTheme {
-		QuizScreen(questions = previewQuestions, currentQuestionId = 2)
+		QuizScreen(uiState = UiState(currentQuestion = questions[3])) {}
 	}
 }

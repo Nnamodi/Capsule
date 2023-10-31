@@ -3,7 +3,6 @@ package com.roland.android.capsule.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -27,13 +26,13 @@ fun Option(
 	val backgroundTint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiaryContainer
 	val textColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiaryContainer
 
-	Column(
+	Box(
 		modifier = modifier
 			.padding(bottom = 10.dp)
 			.clip(MaterialTheme.shapes.medium)
 			.clickable { onOptionSelect(option) }
 			.background(backgroundTint),
-		horizontalAlignment = Alignment.CenterHorizontally
+		contentAlignment = Alignment.Center
 	) {
 		Text(
 			text = option,
@@ -47,7 +46,8 @@ fun Option(
 @Composable
 fun QuestionsTag(
 	modifier: Modifier,
-	currentQuestionId: Int
+	currentQuestionId: Int,
+	numberOfQuestions: Int
 ) {
 	Box(
 		modifier = modifier
@@ -56,7 +56,7 @@ fun QuestionsTag(
 		contentAlignment = Alignment.Center
 	) {
 		Text(
-			text = stringResource(R.string.questions_tag, currentQuestionId),
+			text = stringResource(R.string.questions_tag, currentQuestionId, numberOfQuestions),
 			modifier = Modifier
 				.fillMaxWidth()
 				.padding(14.dp),

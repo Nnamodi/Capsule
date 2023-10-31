@@ -3,8 +3,10 @@ package com.roland.android.capsule.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.roland.android.capsule.ui.screens.CapsuleTabs
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.roland.android.capsule.ui.screens.Capsule
 import com.roland.android.capsule.ui.theme.CapsuleTheme
+import com.roland.android.capsule.viewModel.QuizViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,7 +15,12 @@ class MainActivity : ComponentActivity() {
 		super.onCreate(savedInstanceState)
 		setContent {
 			CapsuleTheme {
-				CapsuleTabs()
+				val viewModel: QuizViewModel = hiltViewModel()
+
+				Capsule(
+					uiState = viewModel.quizUiState,
+					actions = viewModel::actions
+				)
 			}
 		}
 	}

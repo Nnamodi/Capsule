@@ -20,7 +20,7 @@
     <string name="start_quiz_button">Start Quiz Test</string>
     <string name="quiz_result">Result</string>
     <string name="no_result_yet">Complete and submit quiz test to see result</string>
-    <string name="questions_tag">Question %d/10</string>
+    <string name="questions_tag">Question %d/%d</string>
     <string name="help_icon_desc">Help</string>
     <string name="question">Q%d. %s</string>
     <string name="next_button">Next question</string>
