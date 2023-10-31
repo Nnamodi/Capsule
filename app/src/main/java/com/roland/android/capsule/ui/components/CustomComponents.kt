@@ -1,16 +1,11 @@
 package com.roland.android.capsule.ui.components
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowForwardIos
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,50 +13,55 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
 
 @Composable
-fun UpNextButton(
+fun Option(
 	modifier: Modifier,
-	@StringRes nextScreenTitle: Int,
-	@StringRes nextScreenDescription: Int,
-	navigateToNextScreen: () -> Unit
+	option: String,
+	selected: Boolean,
+	onOptionSelect: (String) -> Unit
 ) {
-	Column(modifier.padding(20.dp)) {
-		Text(stringResource(R.string.up_next))
-		Row(
+	val backgroundTint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiaryContainer
+	val textColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiaryContainer
+
+	Column(
+		modifier = modifier
+			.padding(bottom = 10.dp)
+			.clip(MaterialTheme.shapes.medium)
+			.clickable { onOptionSelect(option) }
+			.background(backgroundTint),
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
+		Text(
+			text = option,
+			modifier = Modifier.padding(16.dp),
+			color = textColor,
+			textAlign = TextAlign.Center
+		)
+	}
+}
+
+@Composable
+fun QuestionsTag(
+	modifier: Modifier,
+	currentQuestionId: Int
+) {
+	Box(
+		modifier = modifier
+			.clip(MaterialTheme.shapes.medium)
+			.background(MaterialTheme.colorScheme.primary),
+		contentAlignment = Alignment.Center
+	) {
+		Text(
+			text = stringResource(R.string.questions_tag, currentQuestionId),
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(top = 10.dp)
-				.clip(MaterialTheme.shapes.medium)
-				.background(MaterialTheme.colorScheme.primary)
-				.clickable { navigateToNextScreen() }
-				.padding(horizontal = 20.dp, vertical = 10.dp),
-			verticalAlignment = Alignment.CenterVertically
-		) {
-			Column(
-				modifier = Modifier.weight(1f),
-				verticalArrangement = Arrangement.SpaceAround
-			) {
-				Text(
-					text = stringResource(nextScreenTitle),
-					modifier = Modifier.padding(vertical = 10.dp),
-					color = MaterialTheme.colorScheme.onPrimary,
-					fontWeight = FontWeight.Bold
-				)
-				Text(
-					text = stringResource(nextScreenDescription),
-					color = MaterialTheme.colorScheme.onPrimary,
-					modifier = Modifier.padding(bottom = 10.dp)
-				)
-			}
-			Icon(
-				imageVector = Icons.Rounded.ArrowForwardIos,
-				contentDescription = null,
-				tint = MaterialTheme.colorScheme.onPrimary
-			)
-		}
+				.padding(14.dp),
+			color = MaterialTheme.colorScheme.onPrimary,
+			textAlign = TextAlign.Center
+		)
 	}
 }

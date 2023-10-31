@@ -4,10 +4,25 @@
     <string name="video">Video</string>
     <string name="notes">Notes</string>
     <string name="quiz">Quiz</string>
-    <string name="note_title">Note title</string>
-    <string name="note_body">Note body</string>
+    <string name="note_title">The Bat’s Echolocation</string>
+    <string name="note_body">\n
+        Although bats can see, in order to sense their surroundings in the darkness of night, most species use echolocation—determining the distance of an object by means of reflected sound. For example, some bats can distinguish a mosquito from a beetle by the speed of the insect’s wing beats.\n\n
+        Most bats produce pulses of sound in their larynx and project them through their mouth or nostrils. They use their large ears to detect the echoes produced when the sound waves rebound off objects. These echoes enable a bat to build a mental 3D image of its surroundings. The bat is able to determine the location, elevation, and distance of an object, even amid the noise clutter produced by other bats.\n\n
+        The bat’s echolocation needs to be extremely precise because an error of just one millisecond (one-thousandth of a second) could cause the bat to miss its target by as much as 17 centimeters (6.7 in). According to some researchers, a precision greater than one millisecond “appears impossible.” Yet, experiments suggest that bats have an echo time precision of 10 nanoseconds (100,000,000th of a second), enabling them to determine distances with an accuracy of a millimeter or even less!</string>
     <string name="up_next">Up Next:</string>
     <string name="quiz_test">Quiz Test</string>
     <string name="ten_questions">Questions: 10</string>
-    <string name="notes_description">Read more about topic</string>
+    <string name="notes_description">Read about The Bat’s Echolocation</string>
+    <string name="quiz_intro_message">You have 10 questions to answer under the allotted time.\n
+        Questions are based on either the video, note or general knowledge.\n\n
+        In order to save time, you can skip questions that seem tough and return to them before submission.\n\n
+        Once you submit your answers, you will be directed to the Result screen.</string>
+    <string name="start_quiz_button">Start Quiz Test</string>
+    <string name="quiz_result">Result</string>
+    <string name="no_result_yet">Complete and submit quiz test to see result</string>
+    <string name="questions_tag">Question %d/10</string>
+    <string name="help_icon_desc">Help</string>
+    <string name="question">Q%d. %s</string>
+    <string name="next_button">Next question</string>
+    <string name="prev_button">Previous question</string>
 </resources>

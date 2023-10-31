@@ -10,13 +10,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.roland.android.capsule.R
-import com.roland.android.capsule.ui.components.AppBar
+import com.roland.android.capsule.data.previewQuestions
 import com.roland.android.capsule.ui.theme.CapsuleTheme
 import com.roland.android.capsule.ui.theme.light_outline
 import kotlinx.coroutines.launch
@@ -25,7 +26,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun CapsuleTabs() {
 	Scaffold(
-		topBar = { AppBar(stringResource(R.string.app_name)) }
+		topBar = {
+			TopAppBar(title = { Text(stringResource(R.string.app_name)) })
+		}
 	) {
 		Column(Modifier.padding(it)) {
 			val capsuleTabs = CapsuleTabs.values()
@@ -54,7 +57,8 @@ fun CapsuleTabs() {
 				when (page) {
 					0 -> VideoScreen { scrollToPage(null) }
 					1 -> NotesScreen { scrollToPage(null) }
-					2 -> QuizScreen()
+					2 -> QuizScreen(previewQuestions, 2)
+					3 -> ResultScreen()
 					else -> {}
 				}
 			}
@@ -65,7 +69,8 @@ fun CapsuleTabs() {
 private enum class CapsuleTabs(val nameRes: Int) {
 	Video(R.string.video),
 	Notes(R.string.notes),
-	Quiz(R.string.quiz)
+	Quiz(R.string.quiz),
+	QuizResult(R.string.quiz_result)
 }
 
 @Preview

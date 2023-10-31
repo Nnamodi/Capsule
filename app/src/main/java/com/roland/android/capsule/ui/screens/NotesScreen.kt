@@ -25,17 +25,21 @@ fun NotesScreen(navigateToNextScreen: () -> Unit) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
-			.verticalScroll(rememberScrollState()),
-		horizontalAlignment = Alignment.CenterHorizontally
+			.verticalScroll(rememberScrollState())
 	) {
-		Text(
-			text = stringResource(R.string.note_title),
-			modifier = Modifier.padding(top = 16.dp),
-			style = MaterialTheme.typography.headlineLarge
-		)
-		Text(stringResource(R.string.note_body))
-		Spacer(Modifier.height(50.dp))
-		Spacer(Modifier.weight(1f))
+		Column(
+			modifier = Modifier.padding(horizontal = 20.dp),
+			horizontalAlignment = Alignment.CenterHorizontally
+		) {
+			Spacer(Modifier.height(16.dp))
+			Text(
+				text = stringResource(R.string.note_title),
+				style = MaterialTheme.typography.headlineMedium
+			)
+			Text(stringResource(R.string.note_body))
+			Spacer(Modifier.height(50.dp))
+			Spacer(Modifier.weight(1f))
+		}
 		UpNextButton(
 			modifier = Modifier.fillMaxWidth(),
 			nextScreenTitle = R.string.quiz_test,
