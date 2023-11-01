@@ -62,6 +62,17 @@ fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
 					else -> {}
 				}
 			}
+
+			if (pagerState.currentPage > 0) {
+				val currentQuestionId = uiState.currentQuestion.id
+				val previousPage = pagerState.currentPage - 1
+
+				BackHandler {
+					if (currentQuestionId > 0 && pagerState.currentPage == 2) {
+						actions(Actions.PreviousQuestion)
+					} else scrollToPage(previousPage)
+				}
+			}
 		}
 	}
 }
