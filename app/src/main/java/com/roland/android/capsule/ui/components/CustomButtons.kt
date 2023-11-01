@@ -3,25 +3,30 @@ package com.roland.android.capsule.ui.components
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForwardIos
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
 
@@ -29,20 +34,21 @@ import com.roland.android.capsule.R
 fun UpNextButton(
 	modifier: Modifier,
 	@StringRes nextScreenTitle: Int,
-	@StringRes nextScreenDescription: Int? = null,
+	@StringRes nextScreenDescription: Int,
 	navigateToNextScreen: () -> Unit
 ) {
+	val interactionSource = remember { MutableInteractionSource() }
+	val indication = rememberRipple(color = MaterialTheme.colorScheme.onPrimary)
+
 	Column(modifier.padding(20.dp)) {
-		nextScreenDescription?.let {
-			Text(stringResource(R.string.up_next))
-		}
+		Text(stringResource(R.string.up_next))
+		Spacer(Modifier.padding(top = 10.dp))
 		Row(
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(top = 10.dp)
 				.clip(MaterialTheme.shapes.medium)
 				.background(MaterialTheme.colorScheme.primary)
-				.clickable { navigateToNextScreen() }
+				.clickable(interactionSource, indication) { navigateToNextScreen() }
 				.padding(horizontal = 20.dp, vertical = 10.dp),
 			verticalAlignment = Alignment.CenterVertically
 		) {
@@ -56,13 +62,11 @@ fun UpNextButton(
 					color = MaterialTheme.colorScheme.onPrimary,
 					fontWeight = FontWeight.Bold
 				)
-				nextScreenDescription?.let {
-					Text(
-						text = stringResource(nextScreenDescription),
-						color = MaterialTheme.colorScheme.onPrimary,
-						modifier = Modifier.padding(bottom = 10.dp)
-					)
-				}
+				Text(
+					text = stringResource(nextScreenDescription),
+					color = MaterialTheme.colorScheme.onPrimary,
+					modifier = Modifier.padding(bottom = 10.dp)
+				)
 			}
 			Icon(
 				imageVector = Icons.Rounded.ArrowForwardIos,
@@ -70,6 +74,39 @@ fun UpNextButton(
 				tint = MaterialTheme.colorScheme.onPrimary
 			)
 		}
+	}
+}
+
+@Composable
+fun SubmitButton(
+	modifier: Modifier,
+	@StringRes nextScreenTitle: Int,
+	onClick: () -> Unit
+) {
+	val interactionSource = remember { MutableInteractionSource() }
+	val indication = rememberRipple(color = MaterialTheme.colorScheme.onPrimary)
+
+	Row(
+		modifier = modifier
+			.padding(horizontal = 10.dp)
+			.clip(MaterialTheme.shapes.medium)
+			.background(MaterialTheme.colorScheme.primary)
+			.clickable(interactionSource, indication) { onClick() }
+			.padding(10.dp),
+		verticalAlignment = Alignment.CenterVertically
+	) {
+		Text(
+			text = stringResource(nextScreenTitle),
+			modifier = Modifier.weight(1f),
+			color = MaterialTheme.colorScheme.onPrimary,
+			fontWeight = FontWeight.Bold,
+			textAlign = TextAlign.Center
+		)
+		Icon(
+			imageVector = Icons.Rounded.ArrowForwardIos,
+			contentDescription = null,
+			tint = MaterialTheme.colorScheme.onPrimary
+		)
 	}
 }
 
@@ -89,12 +126,14 @@ fun CustomIconButton(
 		else -> Modifier
 	}
 	val backgroundTint = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+	val interactionSource = remember { MutableInteractionSource() }
+	val indication = rememberRipple(color = MaterialTheme.colorScheme.onPrimary)
 
 	Box(
 		modifier = Modifier
 			.then(clipModifier)
 			.background(backgroundTint)
-			.clickable(enabled) { onClick() }
+			.clickable(interactionSource, indication, enabled) { onClick() }
 	) {
 		Icon(
 			imageVector = icon,

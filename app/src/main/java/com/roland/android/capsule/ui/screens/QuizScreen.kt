@@ -35,13 +35,15 @@ import com.roland.android.capsule.data.questions
 import com.roland.android.capsule.ui.components.CustomIconButton
 import com.roland.android.capsule.ui.components.Option
 import com.roland.android.capsule.ui.components.QuestionsTag
+import com.roland.android.capsule.ui.components.SubmitButton
 import com.roland.android.capsule.ui.theme.CapsuleTheme
 import com.roland.android.capsule.util.Actions
 
 @Composable
 fun QuizScreen(
 	uiState: UiState,
-	actions: (Actions) -> Unit
+	actions: (Actions) -> Unit,
+	navigateToAnotherScreen: (Int?) -> Unit
 ) {
 	val (questions, currentQuestion) = uiState
 	val options = listOf(currentQuestion.option1, currentQuestion.option2, currentQuestion.option3, currentQuestion.option4)
@@ -95,7 +97,10 @@ fun QuizScreen(
 				modifier = Modifier.fillMaxWidth(),
 				option = option,
 				selected = option == selectedOption,
-				onOptionSelect = { selectedOption = it }
+				onOptionSelect = {
+					selectedOption = it
+					actions(Actions.SelectAnswer(it))
+				}
 			)
 		}
 
@@ -113,12 +118,20 @@ fun QuizScreen(
 				icon = Icons.Rounded.ArrowBackIosNew,
 				enabled = currentQuestion.id > 0
 			)
-			Spacer(Modifier.weight(1f))
+			if (currentQuestion.id == questions.lastIndex) {
+				SubmitButton(
+					modifier = Modifier.weight(1f),
+					nextScreenTitle = R.string.submit
+				) {
+					actions(Actions.Submit)
+					navigateToAnotherScreen(null)
+				}
+			} else { Spacer(Modifier.weight(1f)) }
 			CustomIconButton(
 				onClick = { actions(Actions.NextQuestion) },
 				contentDescription = stringResource(R.string.next_button),
 				icon = Icons.Rounded.ArrowForwardIos,
-				enabled = currentQuestion.id < (questions.size - 1)
+				enabled = currentQuestion.id < questions.lastIndex
 			)
 		}
 	}
@@ -128,6 +141,6 @@ fun QuizScreen(
 @Composable
 fun QuizScreenPreview() {
 	CapsuleTheme {
-		QuizScreen(uiState = UiState(currentQuestion = questions[3])) {}
+		QuizScreen(UiState(currentQuestion = questions[3]), {}) {}
 	}
 }

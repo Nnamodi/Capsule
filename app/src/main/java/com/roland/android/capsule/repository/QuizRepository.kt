@@ -6,4 +6,8 @@ interface QuizRepository {
 
 	fun getPreviousQuestion()
 
+	fun selectAnswer(answer: String?)
+
+	fun submit()
+
 }

@@ -1,5 +1,6 @@
 package com.roland.android.capsule.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -28,8 +29,8 @@ fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
 		topBar = {
 			TopAppBar(title = { Text(stringResource(R.string.app_name)) })
 		}
-	) {
-		Column(Modifier.padding(it)) {
+	) { paddingValues ->
+		Column(Modifier.padding(paddingValues)) {
 			val capsuleTabs = CapsuleTabs.values()
 			val scope = rememberCoroutineScope()
 			val pagerState = rememberPagerState(0)
@@ -56,8 +57,8 @@ fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
 				when (page) {
 					0 -> VideoScreen { scrollToPage(null) }
 					1 -> NotesScreen { scrollToPage(null) }
-					2 -> QuizScreen(uiState, actions)
-					3 -> ResultScreen()
+					2 -> QuizScreen(uiState, actions) { scrollToPage(it) }
+					3 -> ResultScreen(uiState)
 					else -> {}
 				}
 			}

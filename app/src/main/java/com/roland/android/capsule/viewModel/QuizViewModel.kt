@@ -1,5 +1,6 @@
 package com.roland.android.capsule.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -33,7 +34,13 @@ class QuizViewModel @Inject constructor(
 			when (action) {
 				Actions.NextQuestion -> quizRepository.getNextQuestion()
 				Actions.PreviousQuestion -> quizRepository.getPreviousQuestion()
+				is Actions.SelectAnswer -> quizRepository.selectAnswer(action.answer)
+				Actions.Submit -> quizRepository.submit()
 			}
-		} catch (e: Exception) { return }
+			Log.i("ActionsInfo", "Action: $action")
+		} catch (e: Exception) {
+			Log.i("ActionsInfo", "Error message: ${e.message}")
+			return
+		}
 	}
 }

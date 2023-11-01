@@ -25,4 +25,11 @@
     <string name="question">Q%d. %s</string>
     <string name="next_button">Next question</string>
     <string name="prev_button">Previous question</string>
+    <string name="submit">SUBMIT</string>
+    <string name="not_good">Not good.\nYou can do better.</string>
+    <string name="fair">A fair result.</string>
+    <string name="satisfactory">Satisfactory performance</string>
+    <string name="very_good">A very good result.\nWell-done!</string>
+    <string name="excellent">An excellent performance!\nYou were so close to acing it.</string>
+    <string name="congratulations">CONGRATULATIONS!\nYou aced it like you wrote it. 🥳</string>
 </resources>
