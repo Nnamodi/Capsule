@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Announcement
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.ArrowForwardIos
-import androidx.compose.material.icons.rounded.LiveHelp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +37,7 @@ import com.roland.android.capsule.ui.components.CustomButton
 import com.roland.android.capsule.ui.components.CustomIconButton
 import com.roland.android.capsule.ui.components.Option
 import com.roland.android.capsule.ui.components.QuestionsTag
-import com.roland.android.capsule.ui.dialog.InfoDialog
+import com.roland.android.capsule.ui.dialog.HelpDialog
 import com.roland.android.capsule.ui.theme.CapsuleTheme
 import com.roland.android.capsule.util.Actions
 
@@ -47,7 +47,7 @@ fun QuizScreen(
 	actions: (Actions) -> Unit,
 	navigateToAnotherScreen: (Int?) -> Unit
 ) {
-	val (questions, currentQuestion, result) = uiState
+	val (questions, currentQuestion, result, quizHalfFinished) = uiState
 	val options = listOf(currentQuestion.option1, currentQuestion.option2, currentQuestion.option3, currentQuestion.option4)
 	var selectedOption by rememberSaveable(currentQuestion) { mutableStateOf(currentQuestion.selectedOption) }
 	val openHelpDialog = remember { mutableStateOf(false) }
@@ -74,7 +74,7 @@ fun QuizScreen(
 			CustomIconButton(
 				onClick = { openHelpDialog.value = true },
 				contentDescription = stringResource(R.string.help_icon_desc),
-				icon = Icons.Rounded.LiveHelp
+				icon = Icons.Outlined.Announcement
 			)
 		}
 
@@ -122,7 +122,7 @@ fun QuizScreen(
 				icon = Icons.Rounded.ArrowBackIosNew,
 				enabled = currentQuestion.id > 0
 			)
-			if (currentQuestion.id == questions.lastIndex && result == null) {
+			if ((currentQuestion.id == questions.lastIndex) && (result == null) && quizHalfFinished) {
 				CustomButton(
 					modifier = Modifier.weight(1f),
 					nextScreenTitle = R.string.submit
@@ -141,7 +141,7 @@ fun QuizScreen(
 	}
 
 	if (openHelpDialog.value) {
-		InfoDialog(
+		HelpDialog(
 			quizTaken = result != null,
 			reset = { navigateToAnotherScreen(0); actions(it) },
 			closeDialog = { openHelpDialog.value = false }

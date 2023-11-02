@@ -35,12 +35,13 @@
     <string name="correct_answers_given">Correct answers: %d</string>
     <string name="reset">Reset</string>
     <string name="help">Help</string>
-    <string name="help1">In order to save time, you can skip questions that seem tough and return to them before submission.\n\n
+    <string name="help1">In order to save time, you can skip questions that seem tough and return to them before submission.\n
+        You are mandated to attempt more than half the questions.\n\n
         Once you submit your answers, you will be directed to the Result screen.</string>
     <string name="help2">Reset result to take quiz again.</string>
     <string name="got_it">Got it</string>
     <string name="welcome_greeting">Welcome!</string>
-    <string name="welcome_message">Please watch the video before proceeding.\nAfter which, read the note on the next screen\n
+    <string name="welcome_message">Please watch the video before proceeding.\nAfter which, read the note on the next screen.\n
         Then you will be equipped to attempt the 10 questions that follow as they are based on either the video, note or general knowledge.\n
         You are to complete all screens before the allotted 10 minutes.\n\n
         Your time starts when you start.</string>

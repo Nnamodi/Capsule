@@ -82,13 +82,6 @@ dependencies {
 	implementation media3.session
 	implementation media3.ui
 
-	// navigation
-	implementation navigation.compose
-
-	// paging
-	implementation paging.compose
-	implementation paging.runtime
-
 	// unit testing
 	testImplementation test.junit
 	androidTestImplementation androidTest.espressoCore

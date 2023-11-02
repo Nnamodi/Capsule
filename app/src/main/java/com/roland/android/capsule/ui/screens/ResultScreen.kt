@@ -8,16 +8,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.RestartAlt
+import androidx.compose.material.icons.rounded.Scoreboard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -155,14 +159,30 @@ private fun StatisticsPanel(
 
 @Composable
 private fun NoResult() {
-	Text(
-		text = stringResource(R.string.no_result_yet),
+	Column(
 		modifier = Modifier
-			.padding(start = 20.dp, top = 64.dp, end = 20.dp),
-		fontStyle = FontStyle.Italic,
-		fontWeight = FontWeight.Light,
-		style = MaterialTheme.typography.headlineMedium
-	)
+			.fillMaxSize()
+			.padding(vertical = 10.dp),
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
+		Icon(
+			imageVector = Icons.Rounded.Scoreboard,
+			contentDescription = null,
+			modifier = Modifier
+				.size(400.dp)
+				.alpha(0.5f)
+		)
+		Text(
+			text = stringResource(R.string.no_result_yet),
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(horizontal = 20.dp),
+			fontStyle = FontStyle.Italic,
+			fontWeight = FontWeight.Light,
+			style = MaterialTheme.typography.headlineMedium,
+			textAlign = TextAlign.Center
+		)
+	}
 }
 
 @Preview(showBackground = true)

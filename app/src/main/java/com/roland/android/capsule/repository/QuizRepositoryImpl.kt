@@ -31,7 +31,7 @@ class QuizRepositoryImpl @Inject constructor(
 		answeredQuestion.selectedOption = answer
 		val questions = uiState.value.quizQuestions
 		questions[currentQuestionId] = answeredQuestion
-		uiState.update { it.copy(quizQuestions = questions) }
+		uiState.update { it.copy(quizQuestions = questions, quizHalfFinished = quizHalFinished()) }
 	}
 
 	override fun submit() {
@@ -61,5 +61,11 @@ class QuizRepositoryImpl @Inject constructor(
 		val refreshedQuestions = uiState.value.quizQuestions
 		refreshedQuestions.forEach { it.selectedOption = null }
 		uiState.value = UiState(refreshedQuestions)
+	}
+
+	private fun quizHalFinished(): Boolean {
+		val questions = uiState.value.quizQuestions
+		val answeredQuestions = questions.filterNot { it.selectedOption == null }
+		return answeredQuestions.size > (questions.size / 2)
 	}
 }

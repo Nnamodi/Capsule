@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.roland.android.capsule.ui.dialog.InfoDialog
+import com.roland.android.capsule.ui.dialog.WelcomeDialog
 import com.roland.android.capsule.ui.screens.Capsule
 import com.roland.android.capsule.ui.theme.CapsuleTheme
 import com.roland.android.capsule.viewModel.QuizViewModel
@@ -26,11 +26,8 @@ class MainActivity : ComponentActivity() {
 					actions = viewModel::actions
 				)
 
-				if (openWelcomeDialog.value) {
-					InfoDialog(
-						welcomeUser = true,
-						closeDialog = { openWelcomeDialog.value = false }
-					)
+				if (openWelcomeDialog.value && !viewModel.quizUiState.quizStarted) {
+					WelcomeDialog { openWelcomeDialog.value = false }
 				}
 			}
 		}

@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 data class UiState(
 	val quizQuestions: MutableList<Question> = questions,
 	val currentQuestion: Question = quizQuestions[0],
-	val result: Result? = null
+	val result: Result? = null,
+	val quizHalfFinished: Boolean = false,
+	val quizStarted: Boolean = false
 )
 
 val uiState = MutableStateFlow(UiState())
