@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,10 +33,11 @@ import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
 import com.roland.android.capsule.data.UiState
 import com.roland.android.capsule.data.questions
+import com.roland.android.capsule.ui.components.CustomButton
 import com.roland.android.capsule.ui.components.CustomIconButton
 import com.roland.android.capsule.ui.components.Option
 import com.roland.android.capsule.ui.components.QuestionsTag
-import com.roland.android.capsule.ui.components.SubmitButton
+import com.roland.android.capsule.ui.dialog.InfoDialog
 import com.roland.android.capsule.ui.theme.CapsuleTheme
 import com.roland.android.capsule.util.Actions
 
@@ -45,9 +47,10 @@ fun QuizScreen(
 	actions: (Actions) -> Unit,
 	navigateToAnotherScreen: (Int?) -> Unit
 ) {
-	val (questions, currentQuestion) = uiState
+	val (questions, currentQuestion, result) = uiState
 	val options = listOf(currentQuestion.option1, currentQuestion.option2, currentQuestion.option3, currentQuestion.option4)
 	var selectedOption by rememberSaveable(currentQuestion) { mutableStateOf(currentQuestion.selectedOption) }
+	val openHelpDialog = remember { mutableStateOf(false) }
 
 	Column(
 		modifier = Modifier
@@ -69,7 +72,7 @@ fun QuizScreen(
 			)
 			Spacer(Modifier.width(10.dp))
 			CustomIconButton(
-				onClick = {},
+				onClick = { openHelpDialog.value = true },
 				contentDescription = stringResource(R.string.help_icon_desc),
 				icon = Icons.Rounded.LiveHelp
 			)
@@ -97,6 +100,7 @@ fun QuizScreen(
 				modifier = Modifier.fillMaxWidth(),
 				option = option,
 				selected = option == selectedOption,
+				quizTaken = result != null,
 				onOptionSelect = {
 					selectedOption = it
 					actions(Actions.SelectAnswer(it))
@@ -118,8 +122,8 @@ fun QuizScreen(
 				icon = Icons.Rounded.ArrowBackIosNew,
 				enabled = currentQuestion.id > 0
 			)
-			if (currentQuestion.id == questions.lastIndex) {
-				SubmitButton(
+			if (currentQuestion.id == questions.lastIndex && result == null) {
+				CustomButton(
 					modifier = Modifier.weight(1f),
 					nextScreenTitle = R.string.submit
 				) {
@@ -134,6 +138,14 @@ fun QuizScreen(
 				enabled = currentQuestion.id < questions.lastIndex
 			)
 		}
+	}
+
+	if (openHelpDialog.value) {
+		InfoDialog(
+			quizTaken = result != null,
+			reset = { navigateToAnotherScreen(0); actions(it) },
+			closeDialog = { openHelpDialog.value = false }
+		)
 	}
 }
 

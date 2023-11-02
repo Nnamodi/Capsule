@@ -34,9 +34,14 @@ fun Option(
 	modifier: Modifier,
 	option: String,
 	selected: Boolean,
+	quizTaken: Boolean,
 	onOptionSelect: (String?) -> Unit
 ) {
-	val backgroundTint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiaryContainer
+	val backgroundTint = when {
+		selected && quizTaken -> MaterialTheme.colorScheme.outline
+		selected -> MaterialTheme.colorScheme.primary
+		else -> MaterialTheme.colorScheme.tertiaryContainer
+	}
 	val textColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiaryContainer
 	val indicationColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiaryContainer
 	val interactionSource = remember { MutableInteractionSource() }
@@ -46,7 +51,7 @@ fun Option(
 		modifier = modifier
 			.padding(bottom = 10.dp)
 			.clip(MaterialTheme.shapes.medium)
-			.clickable(interactionSource, indication) {
+			.clickable(interactionSource, indication, !quizTaken) {
 				onOptionSelect(if (selected) null else option)
 			}
 			.background(backgroundTint),

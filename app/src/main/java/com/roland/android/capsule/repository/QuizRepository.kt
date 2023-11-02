@@ -10,4 +10,6 @@ interface QuizRepository {
 
 	fun submit()
 
+	fun reset()
+
 }

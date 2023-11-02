@@ -78,9 +78,10 @@ fun UpNextButton(
 }
 
 @Composable
-fun SubmitButton(
+fun CustomButton(
 	modifier: Modifier,
 	@StringRes nextScreenTitle: Int,
+	icon: ImageVector = Icons.Rounded.ArrowForwardIos,
 	onClick: () -> Unit
 ) {
 	val interactionSource = remember { MutableInteractionSource() }
@@ -103,7 +104,7 @@ fun SubmitButton(
 			textAlign = TextAlign.Center
 		)
 		Icon(
-			imageVector = Icons.Rounded.ArrowForwardIos,
+			imageVector = icon,
 			contentDescription = null,
 			tint = MaterialTheme.colorScheme.onPrimary
 		)
@@ -113,6 +114,7 @@ fun SubmitButton(
 @Composable
 fun CustomIconButton(
 	onClick: () -> Unit,
+	modifier: Modifier = Modifier,
 	clipStart: Boolean = true,
 	clipEnd: Boolean = true,
 	contentDescription: String,
@@ -130,7 +132,7 @@ fun CustomIconButton(
 	val indication = rememberRipple(color = MaterialTheme.colorScheme.onPrimary)
 
 	Box(
-		modifier = Modifier
+		modifier = modifier
 			.then(clipModifier)
 			.background(backgroundTint)
 			.clickable(interactionSource, indication, enabled) { onClick() }

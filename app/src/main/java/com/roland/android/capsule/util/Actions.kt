@@ -5,4 +5,5 @@ sealed interface Actions {
 	object PreviousQuestion : Actions
 	data class SelectAnswer(val answer: String?) : Actions
 	object Submit : Actions
+	object Reset : Actions
 }

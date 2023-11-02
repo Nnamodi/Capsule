@@ -58,7 +58,7 @@ fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
 					0 -> VideoScreen { scrollToPage(null) }
 					1 -> NotesScreen { scrollToPage(null) }
 					2 -> QuizScreen(uiState, actions) { scrollToPage(it) }
-					3 -> ResultScreen(uiState)
+					3 -> ResultScreen(uiState) { actions(it); scrollToPage(0) }
 					else -> {}
 				}
 			}

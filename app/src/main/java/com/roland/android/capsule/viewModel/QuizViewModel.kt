@@ -36,6 +36,7 @@ class QuizViewModel @Inject constructor(
 				Actions.PreviousQuestion -> quizRepository.getPreviousQuestion()
 				is Actions.SelectAnswer -> quizRepository.selectAnswer(action.answer)
 				Actions.Submit -> quizRepository.submit()
+				Actions.Reset -> quizRepository.reset()
 			}
 			Log.i("ActionsInfo", "Action: $action")
 		} catch (e: Exception) {

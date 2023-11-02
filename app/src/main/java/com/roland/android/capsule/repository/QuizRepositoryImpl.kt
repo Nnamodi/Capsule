@@ -3,6 +3,7 @@ package com.roland.android.capsule.repository
 import android.content.Context
 import com.roland.android.capsule.R
 import com.roland.android.capsule.data.Result
+import com.roland.android.capsule.data.UiState
 import com.roland.android.capsule.data.uiState
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.update
@@ -54,5 +55,11 @@ class QuizRepositoryImpl @Inject constructor(
 			correctAnswers = correctAnswers
 		)
 		uiState.update { it.copy(result = result) }
+	}
+
+	override fun reset() {
+		val refreshedQuestions = uiState.value.quizQuestions
+		refreshedQuestions.forEach { it.selectedOption = null }
+		uiState.value = UiState(refreshedQuestions)
 	}
 }

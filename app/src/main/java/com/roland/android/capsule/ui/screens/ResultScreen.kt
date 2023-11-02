@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,10 +30,15 @@ import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
 import com.roland.android.capsule.data.Result
 import com.roland.android.capsule.data.UiState
+import com.roland.android.capsule.ui.components.CustomButton
 import com.roland.android.capsule.ui.theme.CapsuleTheme
+import com.roland.android.capsule.util.Actions
 
 @Composable
-fun ResultScreen(uiState: UiState) {
+fun ResultScreen(
+	uiState: UiState,
+	reset: (Actions) -> Unit
+) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -56,6 +63,16 @@ fun ResultScreen(uiState: UiState) {
 			ScoreBoard(score)
 
 			StatisticsPanel(uiState, answeredQuestions, correctAnswers)
+
+			Spacer(modifier = (Modifier.weight(1f)))
+
+			CustomButton(
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(30.dp),
+				nextScreenTitle = R.string.reset,
+				icon = Icons.Rounded.RestartAlt
+			) { reset(Actions.Reset) }
 		}
 	}
 }
@@ -159,6 +176,6 @@ private fun ResultScreenPreview() {
 			correctAnswers = 4
 		)
 
-		ResultScreen(UiState(result = result))
+		ResultScreen(UiState(result = result)) {}
 	}
 }
