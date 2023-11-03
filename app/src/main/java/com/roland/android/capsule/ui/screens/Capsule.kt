@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.roland.android.capsule.R
 import com.roland.android.capsule.data.UiState
+import com.roland.android.capsule.ui.components.Clock
 import com.roland.android.capsule.ui.theme.light_outline
 import com.roland.android.capsule.util.Actions
 import kotlinx.coroutines.launch
@@ -27,7 +28,10 @@ import kotlinx.coroutines.launch
 fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
 	Scaffold(
 		topBar = {
-			TopAppBar(title = { Text(stringResource(R.string.app_name)) })
+			TopAppBar(
+				title = { Text(stringResource(R.string.app_name)) },
+				actions = { Clock(uiState.time) }
+			)
 		}
 	) { paddingValues ->
 		Column(Modifier.padding(paddingValues)) {

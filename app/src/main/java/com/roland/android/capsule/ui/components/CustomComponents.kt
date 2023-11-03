@@ -1,6 +1,7 @@
 package com.roland.android.capsule.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -10,7 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccessTime
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +32,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
+
+@Composable
+fun Clock(time: String) {
+	Row(
+		modifier = Modifier
+			.padding(vertical = 6.dp)
+			.border(
+				width = 2.dp,
+				color = MaterialTheme.colorScheme.primary,
+				shape = MaterialTheme.shapes.medium
+			),
+		verticalAlignment = Alignment.CenterVertically
+	) {
+		Icon(
+			imageVector = Icons.Rounded.AccessTime,
+			contentDescription = stringResource(R.string.time, time),
+			modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+			tint = MaterialTheme.colorScheme.primary
+		)
+		Text(
+			text = time,
+			modifier = Modifier.padding(end = 10.dp),
+			color = MaterialTheme.colorScheme.primary,
+			style = MaterialTheme.typography.bodyLarge
+		)
+	}
+}
 
 @Composable
 fun Option(

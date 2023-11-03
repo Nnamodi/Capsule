@@ -2,6 +2,8 @@ package com.roland.android.capsule.repository
 
 interface QuizRepository {
 
+	fun start()
+
 	fun getNextQuestion()
 
 	fun getPreviousQuestion()

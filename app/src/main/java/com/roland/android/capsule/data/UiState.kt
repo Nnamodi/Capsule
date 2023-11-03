@@ -7,6 +7,7 @@ data class UiState(
 	val currentQuestion: Question = quizQuestions[0],
 	val result: Result? = null,
 	val quizHalfFinished: Boolean = false,
+	val time: String = "1:00 min",
 	val quizStarted: Boolean = false
 )
 

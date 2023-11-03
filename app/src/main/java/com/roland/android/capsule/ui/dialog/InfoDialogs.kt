@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.LiveHelp
+import androidx.compose.material.icons.outlined.Announcement
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -51,7 +51,7 @@ fun HelpDialog(
 		title = R.string.help,
 		text = text,
 		buttonText = buttonText,
-		icon = Icons.Rounded.LiveHelp,
+		icon = Icons.Outlined.Announcement,
 		onDismissRequest = closeDialog,
 		closeDialog = {
 			if (quizTaken) reset(Actions.Reset) else closeDialog()

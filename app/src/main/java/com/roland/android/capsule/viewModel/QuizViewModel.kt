@@ -10,18 +10,26 @@ import com.roland.android.capsule.data.UiState
 import com.roland.android.capsule.data.uiState
 import com.roland.android.capsule.repository.QuizRepository
 import com.roland.android.capsule.util.Actions
+import com.roland.android.capsule.util.Timing
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-	private val quizRepository: QuizRepository
+	private val quizRepository: QuizRepository,
+	private val timing: Timing
 ) : ViewModel() {
 	var quizUiState by mutableStateOf(UiState()); private set
 
 	init {
+		viewModelScope.launch {
+			timing.formattedTime.collect { time ->
+				uiState.update { it.copy(time = time) }
+			}
+		}
 		viewModelScope.launch {
 			uiState.collectLatest {
 				quizUiState = it
@@ -32,6 +40,7 @@ class QuizViewModel @Inject constructor(
 	fun actions(action: Actions) {
 		try {
 			when (action) {
+				Actions.Start -> quizRepository.start()
 				Actions.NextQuestion -> quizRepository.getNextQuestion()
 				Actions.PreviousQuestion -> quizRepository.getPreviousQuestion()
 				is Actions.SelectAnswer -> quizRepository.selectAnswer(action.answer)

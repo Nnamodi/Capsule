@@ -27,7 +27,10 @@ class MainActivity : ComponentActivity() {
 				)
 
 				if (openWelcomeDialog.value && !viewModel.quizUiState.quizStarted) {
-					WelcomeDialog { openWelcomeDialog.value = false }
+					WelcomeDialog {
+						viewModel.actions(it)
+						openWelcomeDialog.value = false
+					}
 				}
 			}
 		}
