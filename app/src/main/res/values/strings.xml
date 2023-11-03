@@ -47,4 +47,10 @@
         Your time starts when you start.</string>
     <string name="start_button">START</string>
     <string name="time">You have %s left</string>
+    <string name="check_answer">CHECK ANSWER</string>
+    <string name="time_up">Time up!</string>
+    <string name="see_result">See result</string>
+    <string name="restart">Restart</string>
+    <string name="time_up_message">Oops! You were not able to finish up before time up.\nNext time, try to beat the time.</string>
+    <string name="one_at_a_time">Take it one at a time</string>
 </resources>

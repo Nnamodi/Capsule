@@ -10,7 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Announcement
+import androidx.compose.material.icons.rounded.Announcement
+import androidx.compose.material.icons.rounded.HourglassEmpty
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -51,10 +52,38 @@ fun HelpDialog(
 		title = R.string.help,
 		text = text,
 		buttonText = buttonText,
-		icon = Icons.Outlined.Announcement,
+		icon = Icons.Rounded.Announcement,
 		onDismissRequest = closeDialog,
 		closeDialog = {
-			if (quizTaken) reset(Actions.Reset) else closeDialog()
+			if (quizTaken) reset(Actions.Reset)
+			closeDialog()
+		}
+	)
+}
+
+@Composable
+fun TimeUpDialog(
+	quizHalfFinished: Boolean,
+	action: (Actions) -> Unit,
+	navigateToFirstScreen: () -> Unit,
+	navigateToResultScreen: () -> Unit
+) {
+	val text = if (quizHalfFinished) R.string.see_result else R.string.restart
+
+	InfoDialog(
+		title = R.string.time_up,
+		text = R.string.time_up_message,
+		buttonText = text,
+		titleArrangement = Arrangement.Center,
+		icon = Icons.Rounded.HourglassEmpty,
+		closeDialog = {
+			if (quizHalfFinished) {
+				action(Actions.Submit)
+				navigateToResultScreen()
+			} else {
+				action(Actions.Reset)
+				navigateToFirstScreen()
+			}
 		}
 	)
 }

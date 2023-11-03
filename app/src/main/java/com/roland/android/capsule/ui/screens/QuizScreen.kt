@@ -47,10 +47,10 @@ fun QuizScreen(
 	actions: (Actions) -> Unit,
 	navigateToAnotherScreen: (Int?) -> Unit
 ) {
-	val (questions, currentQuestion, result, quizHalfFinished) = uiState
-	val options = listOf(currentQuestion.option1, currentQuestion.option2, currentQuestion.option3, currentQuestion.option4)
+	val (questions, currentQuestion, result) = uiState
 	var selectedOption by rememberSaveable(currentQuestion) { mutableStateOf(currentQuestion.selectedOption) }
 	val openHelpDialog = remember { mutableStateOf(false) }
+	var answerToCurrentQuestion by remember(uiState.result) { mutableStateOf("") }
 
 	Column(
 		modifier = Modifier
@@ -95,12 +95,13 @@ fun QuizScreen(
 			)
 		}
 
-		options.forEach { option ->
+		currentQuestion.options.forEach { option ->
 			Option(
 				modifier = Modifier.fillMaxWidth(),
 				option = option,
 				selected = option == selectedOption,
 				quizTaken = result != null,
+				answer = answerToCurrentQuestion,
 				onOptionSelect = {
 					selectedOption = it
 					actions(Actions.SelectAnswer(it))
@@ -111,33 +112,12 @@ fun QuizScreen(
 		Spacer(Modifier.height(20.dp))
 		Spacer(Modifier.weight(1f))
 
-		Row(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(bottom = 20.dp)
-		) {
-			CustomIconButton(
-				onClick = { actions(Actions.PreviousQuestion) },
-				contentDescription = stringResource(R.string.prev_button),
-				icon = Icons.Rounded.ArrowBackIosNew,
-				enabled = currentQuestion.id > 0
-			)
-			if ((currentQuestion.id == questions.lastIndex) && (result == null) && quizHalfFinished) {
-				CustomButton(
-					modifier = Modifier.weight(1f),
-					nextScreenTitle = R.string.submit
-				) {
-					actions(Actions.Submit)
-					navigateToAnotherScreen(null)
-				}
-			} else { Spacer(Modifier.weight(1f)) }
-			CustomIconButton(
-				onClick = { actions(Actions.NextQuestion) },
-				contentDescription = stringResource(R.string.next_button),
-				icon = Icons.Rounded.ArrowForwardIos,
-				enabled = currentQuestion.id < questions.lastIndex
-			)
-		}
+		BottomButtons(
+			uiState = uiState,
+			actions = actions,
+			answerToCurrentQuestion = { answerToCurrentQuestion = it },
+			navigateToAnotherScreen = navigateToAnotherScreen
+		)
 	}
 
 	if (openHelpDialog.value) {
@@ -145,6 +125,64 @@ fun QuizScreen(
 			quizTaken = result != null,
 			reset = { navigateToAnotherScreen(0); actions(it) },
 			closeDialog = { openHelpDialog.value = false }
+		)
+	}
+}
+
+@Composable
+private fun BottomButtons(
+	uiState: UiState,
+	actions: (Actions) -> Unit,
+	answerToCurrentQuestion: (String) -> Unit,
+	navigateToAnotherScreen: (Int?) -> Unit
+) {
+	val (_, currentQuestion, result, quizHalfFinished) = uiState
+
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(bottom = 20.dp),
+		verticalAlignment = Alignment.CenterVertically
+	) {
+		CustomIconButton(
+			onClick = {
+				actions(Actions.PreviousQuestion)
+				answerToCurrentQuestion("")
+			},
+			contentDescription = stringResource(R.string.prev_button),
+			icon = Icons.Rounded.ArrowBackIosNew,
+			enabled = currentQuestion.id > 0
+		)
+		when {
+			!quizHalfFinished -> Spacer(Modifier.weight(1f))
+			result != null -> {
+				CustomButton(
+					modifier = Modifier.weight(1f),
+					nextScreenTitle = R.string.check_answer,
+				) {
+					answerToCurrentQuestion(currentQuestion.answer)
+				}
+			}
+			currentQuestion.id == questions.lastIndex -> {
+				CustomButton(
+					modifier = Modifier.weight(1f),
+					nextScreenTitle = R.string.submit,
+					icon = Icons.Rounded.ArrowForwardIos
+				) {
+					actions(Actions.Submit)
+					navigateToAnotherScreen(null)
+				}
+			}
+			else -> Spacer(Modifier.weight(1f))
+		}
+		CustomIconButton(
+			onClick = {
+				actions(Actions.NextQuestion)
+				answerToCurrentQuestion("")
+			},
+			contentDescription = stringResource(R.string.next_button),
+			icon = Icons.Rounded.ArrowForwardIos,
+			enabled = currentQuestion.id < questions.lastIndex
 		)
 	}
 }

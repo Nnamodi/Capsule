@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForwardIos
 import androidx.compose.material.ripple.rememberRipple
@@ -81,7 +80,7 @@ fun UpNextButton(
 fun CustomButton(
 	modifier: Modifier,
 	@StringRes nextScreenTitle: Int,
-	icon: ImageVector = Icons.Rounded.ArrowForwardIos,
+	icon: ImageVector? = null,
 	onClick: () -> Unit
 ) {
 	val interactionSource = remember { MutableInteractionSource() }
@@ -98,16 +97,20 @@ fun CustomButton(
 	) {
 		Text(
 			text = stringResource(nextScreenTitle),
-			modifier = Modifier.weight(1f),
+			modifier = Modifier
+				.weight(1f)
+				.padding(vertical = 4.dp),
 			color = MaterialTheme.colorScheme.onPrimary,
 			fontWeight = FontWeight.Bold,
 			textAlign = TextAlign.Center
 		)
-		Icon(
-			imageVector = icon,
-			contentDescription = null,
-			tint = MaterialTheme.colorScheme.onPrimary
-		)
+		icon?.let {
+			Icon(
+				imageVector = it,
+				contentDescription = null,
+				tint = MaterialTheme.colorScheme.onPrimary
+			)
+		}
 	}
 }
 
@@ -115,25 +118,17 @@ fun CustomButton(
 fun CustomIconButton(
 	onClick: () -> Unit,
 	modifier: Modifier = Modifier,
-	clipStart: Boolean = true,
-	clipEnd: Boolean = true,
 	contentDescription: String,
 	icon: ImageVector,
 	enabled: Boolean = true
 ) {
-	val clipModifier = when {
-		clipStart && clipEnd -> Modifier.clip(MaterialTheme.shapes.medium)
-		clipStart -> Modifier.clip(RoundedCornerShape(topStart = 12.dp, bottomStart = 12.dp))
-		clipEnd -> Modifier.clip(RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp))
-		else -> Modifier
-	}
 	val backgroundTint = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
 	val interactionSource = remember { MutableInteractionSource() }
 	val indication = rememberRipple(color = MaterialTheme.colorScheme.onPrimary)
 
 	Box(
 		modifier = modifier
-			.then(clipModifier)
+			.clip(MaterialTheme.shapes.medium)
 			.background(backgroundTint)
 			.clickable(interactionSource, indication, enabled) { onClick() }
 	) {
