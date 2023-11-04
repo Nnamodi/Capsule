@@ -26,7 +26,7 @@ class QuizViewModel @Inject constructor(
 
 	init {
 		viewModelScope.launch {
-			timing.formattedTime.collect { time ->
+			timing.time.collect { time ->
 				uiState.update { it.copy(time = time) }
 			}
 		}

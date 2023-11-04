@@ -9,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.roland.android.capsule.ui.dialog.WelcomeDialog
 import com.roland.android.capsule.ui.screens.Capsule
 import com.roland.android.capsule.ui.theme.CapsuleTheme
+import com.roland.android.capsule.util.Constant.START_TIME
 import com.roland.android.capsule.viewModel.QuizViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,14 +20,16 @@ class MainActivity : ComponentActivity() {
 		setContent {
 			CapsuleTheme {
 				val viewModel: QuizViewModel = hiltViewModel()
+				val uiState = viewModel.quizUiState
 				val openWelcomeDialog = rememberSaveable { mutableStateOf(true) }
 
 				Capsule(
-					uiState = viewModel.quizUiState,
+					uiState = uiState,
 					actions = viewModel::actions
 				)
 
-				if (openWelcomeDialog.value && !viewModel.quizUiState.quizStarted) {
+				if (openWelcomeDialog.value && !uiState.quizStarted
+					&& (uiState.time.formattedTime == START_TIME)) {
 					WelcomeDialog {
 						viewModel.actions(it)
 						openWelcomeDialog.value = false

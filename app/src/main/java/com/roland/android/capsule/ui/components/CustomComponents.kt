@@ -32,15 +32,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
+import com.roland.android.capsule.data.Time
 
 @Composable
-fun Clock(time: String) {
+fun Clock(time: Time) {
+	val color = if (time.timeInMillis < 16000L) {
+		MaterialTheme.colorScheme.error
+	} else MaterialTheme.colorScheme.primary
+
 	Row(
 		modifier = Modifier
 			.padding(vertical = 6.dp)
 			.border(
 				width = 2.dp,
-				color = MaterialTheme.colorScheme.primary,
+				color = color,
 				shape = MaterialTheme.shapes.medium
 			),
 		verticalAlignment = Alignment.CenterVertically
@@ -49,12 +54,12 @@ fun Clock(time: String) {
 			imageVector = Icons.Rounded.AccessTime,
 			contentDescription = stringResource(R.string.time, time),
 			modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-			tint = MaterialTheme.colorScheme.primary
+			tint = color
 		)
 		Text(
-			text = time,
+			text = time.formattedTime,
 			modifier = Modifier.padding(end = 10.dp),
-			color = MaterialTheme.colorScheme.primary,
+			color = color,
 			style = MaterialTheme.typography.bodyLarge
 		)
 	}
@@ -66,14 +71,20 @@ fun Option(
 	option: String,
 	selected: Boolean,
 	quizTaken: Boolean,
+	answer: String,
 	onOptionSelect: (String?) -> Unit
 ) {
 	val backgroundTint = when {
+		answer == option -> Color.Green
 		selected && quizTaken -> MaterialTheme.colorScheme.outline
 		selected -> MaterialTheme.colorScheme.primary
 		else -> MaterialTheme.colorScheme.tertiaryContainer
 	}
-	val textColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiaryContainer
+	val textColor = when {
+		answer == option -> Color.Black
+		selected -> MaterialTheme.colorScheme.onPrimary
+		else -> MaterialTheme.colorScheme.onTertiaryContainer
+	}
 	val indicationColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiaryContainer
 	val interactionSource = remember { MutableInteractionSource() }
 	val indication = rememberRipple(color = indicationColor)
