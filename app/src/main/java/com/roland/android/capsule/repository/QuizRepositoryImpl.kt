@@ -62,7 +62,7 @@ class QuizRepositoryImpl @Inject constructor(
 		refreshedQuestions.forEach { it.selectedOption = null }
 
 		timing.restart()
-		uiState.value = UiState(refreshedQuestions)
+		uiState.value = UiState(refreshedQuestions, quizStarted = true)
 	}
 
 	private fun Double.getRemark() = when (this) {

@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.roland.android.capsule.ui.dialog.WelcomeDialog
 import com.roland.android.capsule.ui.screens.Capsule
 import com.roland.android.capsule.ui.theme.CapsuleTheme
-import com.roland.android.capsule.util.Constant.START_TIME
+import com.roland.android.capsule.util.Constant.ALLOTTED_TIME_MILLIS
 import com.roland.android.capsule.viewModel.QuizViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,11 +25,12 @@ class MainActivity : ComponentActivity() {
 
 				Capsule(
 					uiState = uiState,
+					player = viewModel.player,
 					actions = viewModel::actions
 				)
 
 				if (openWelcomeDialog.value && !uiState.quizStarted
-					&& (uiState.time.formattedTime == START_TIME)) {
+					&& (uiState.time.timeInMillis == ALLOTTED_TIME_MILLIS)) {
 					WelcomeDialog {
 						viewModel.actions(it)
 						openWelcomeDialog.value = false

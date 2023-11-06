@@ -4,15 +4,15 @@
     <string name="video">Video</string>
     <string name="notes">Notes</string>
     <string name="quiz">Quiz</string>
-    <string name="note_title">The Bat’s Echolocation</string>
+    <string name="note_title">The Remora’s Sucker</string>
     <string name="note_body">\n
-        Although bats can see, in order to sense their surroundings in the darkness of night, most species use echolocation—determining the distance of an object by means of reflected sound. For example, some bats can distinguish a mosquito from a beetle by the speed of the insect’s wing beats.\n\n
-        Most bats produce pulses of sound in their larynx and project them through their mouth or nostrils. They use their large ears to detect the echoes produced when the sound waves rebound off objects. These echoes enable a bat to build a mental 3D image of its surroundings. The bat is able to determine the location, elevation, and distance of an object, even amid the noise clutter produced by other bats.\n\n
-        The bat’s echolocation needs to be extremely precise because an error of just one millisecond (one-thousandth of a second) could cause the bat to miss its target by as much as 17 centimeters (6.7 in). According to some researchers, a precision greater than one millisecond “appears impossible.” Yet, experiments suggest that bats have an echo time precision of 10 nanoseconds (100,000,000th of a second), enabling them to determine distances with an accuracy of a millimeter or even less!</string>
+        The remora, a type of sucking fish, is able to attach itself firmly to other sea creatures and then detach itself with ease and without harming the host.\n\n
+        The remora attaches itself to rays, sharks, turtles, whales, and other sea creatures, regardless of the texture of their skin or shell. The remora feeds on parasites and its host’s leftover food—all the while enjoying a free ride and protection from predators. Researchers are studying the remora’s sucker, or suction disc, to see how it enables the fish to attach itself gently but firmly to a variety of surfaces.\n\n
+        The remora’s oval-shaped suction disc is located on the back of its head. The disc has a fleshy outer lip that forms a tight seal to maintain suction. Within the disc, rows of flaps have tiny, rigid spines. When the flaps are erect, the spines make contact with the host’s skin, creating friction. This combination of suction and friction keeps the remora firmly attached regardless of the host’s speed or sudden change in direction.</string>
     <string name="up_next">Up Next:</string>
     <string name="quiz_test">Quiz Test</string>
     <string name="ten_questions">Questions: 10</string>
-    <string name="notes_description">Read about The Bat’s Echolocation</string>
+    <string name="notes_description">Read about The Remora’s Sucker</string>
     <string name="start_quiz_button">Start Quiz Test</string>
     <string name="quiz_result">Result</string>
     <string name="no_result_yet">Complete and submit quiz test to see result</string>

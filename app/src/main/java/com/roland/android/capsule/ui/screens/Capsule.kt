@@ -14,10 +14,14 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.media3.common.Player
 import com.roland.android.capsule.R
 import com.roland.android.capsule.data.UiState
 import com.roland.android.capsule.ui.components.Clock
@@ -28,7 +32,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
+fun Capsule(
+	uiState: UiState,
+	player: Player,
+	actions: (Actions) -> Unit
+) {
 	val context = LocalContext.current
 	val capsuleTabs = CapsuleTabs.values()
 	val scope = rememberCoroutineScope()
@@ -68,8 +76,11 @@ fun Capsule(uiState: UiState, actions: (Actions) -> Unit) {
 				pageCount = capsuleTabs.size,
 				beyondBoundsPageCount = capsuleTabs.size,
 			) { page ->
+				val videoScreenIsVisible by remember(pagerState.currentPage) {
+					derivedStateOf { pagerState.currentPage == 0 }
+				}
 				when (page) {
-					0 -> VideoScreen { scrollToPage(null) }
+					0 -> VideoScreen(player, videoScreenIsVisible) { scrollToPage(null) }
 					1 -> NotesScreen { scrollToPage(null) }
 					2 -> QuizScreen(uiState, actions) { scrollToPage(it) }
 					3 -> ResultScreen(uiState) { actions(it); scrollToPage(0) }

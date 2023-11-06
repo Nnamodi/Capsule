@@ -58,7 +58,7 @@ fun ResultScreen(
 			Text(
 				text = remark,
 				modifier = Modifier
-					.padding(40.dp)
+					.padding(vertical = 40.dp)
 					.fillMaxWidth(),
 				textAlign = TextAlign.Center,
 				style = MaterialTheme.typography.headlineMedium

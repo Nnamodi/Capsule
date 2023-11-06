@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.media3.common.Player
 import com.roland.android.capsule.data.UiState
 import com.roland.android.capsule.data.uiState
 import com.roland.android.capsule.repository.QuizRepository
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QuizViewModel @Inject constructor(
 	private val quizRepository: QuizRepository,
+	val player: Player,
 	private val timing: Timing
 ) : ViewModel() {
 	var quizUiState by mutableStateOf(UiState()); private set
@@ -35,6 +37,7 @@ class QuizViewModel @Inject constructor(
 				quizUiState = it
 			}
 		}
+		player.prepare()
 	}
 
 	fun actions(action: Actions) {

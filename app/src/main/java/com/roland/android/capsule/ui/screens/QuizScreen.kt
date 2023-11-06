@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,9 +47,9 @@ fun QuizScreen(
 	navigateToAnotherScreen: (Int?) -> Unit
 ) {
 	val (questions, currentQuestion, result) = uiState
-	var selectedOption by rememberSaveable(currentQuestion) { mutableStateOf(currentQuestion.selectedOption) }
+	var selectedOption by remember(currentQuestion, result) { mutableStateOf(currentQuestion.selectedOption) }
 	val openHelpDialog = remember { mutableStateOf(false) }
-	var answerToCurrentQuestion by remember(uiState.result) { mutableStateOf("") }
+	var answerToCurrentQuestion by remember(result) { mutableStateOf("") }
 
 	Column(
 		modifier = Modifier
@@ -114,8 +113,9 @@ fun QuizScreen(
 
 		BottomButtons(
 			uiState = uiState,
+			answerShown = answerToCurrentQuestion.isEmpty(),
 			actions = actions,
-			answerToCurrentQuestion = { answerToCurrentQuestion = it },
+			showAnswer = { answerToCurrentQuestion = it },
 			navigateToAnotherScreen = navigateToAnotherScreen
 		)
 	}
@@ -132,8 +132,9 @@ fun QuizScreen(
 @Composable
 private fun BottomButtons(
 	uiState: UiState,
+	answerShown: Boolean,
 	actions: (Actions) -> Unit,
-	answerToCurrentQuestion: (String) -> Unit,
+	showAnswer: (String) -> Unit,
 	navigateToAnotherScreen: (Int?) -> Unit
 ) {
 	val (_, currentQuestion, result, quizHalfFinished) = uiState
@@ -147,7 +148,7 @@ private fun BottomButtons(
 		CustomIconButton(
 			onClick = {
 				actions(Actions.PreviousQuestion)
-				answerToCurrentQuestion("")
+				showAnswer("")
 			},
 			contentDescription = stringResource(R.string.prev_button),
 			icon = Icons.Rounded.ArrowBackIosNew,
@@ -159,8 +160,9 @@ private fun BottomButtons(
 				CustomButton(
 					modifier = Modifier.weight(1f),
 					nextScreenTitle = R.string.check_answer,
+					enabled = answerShown
 				) {
-					answerToCurrentQuestion(currentQuestion.answer)
+					showAnswer(currentQuestion.answer)
 				}
 			}
 			currentQuestion.id == questions.lastIndex -> {
@@ -178,7 +180,7 @@ private fun BottomButtons(
 		CustomIconButton(
 			onClick = {
 				actions(Actions.NextQuestion)
-				answerToCurrentQuestion("")
+				showAnswer("")
 			},
 			contentDescription = stringResource(R.string.next_button),
 			icon = Icons.Rounded.ArrowForwardIos,

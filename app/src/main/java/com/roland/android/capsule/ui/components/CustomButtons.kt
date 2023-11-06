@@ -81,8 +81,10 @@ fun CustomButton(
 	modifier: Modifier,
 	@StringRes nextScreenTitle: Int,
 	icon: ImageVector? = null,
+	enabled: Boolean = true,
 	onClick: () -> Unit
 ) {
+	val backgroundTint = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
 	val interactionSource = remember { MutableInteractionSource() }
 	val indication = rememberRipple(color = MaterialTheme.colorScheme.onPrimary)
 
@@ -90,8 +92,8 @@ fun CustomButton(
 		modifier = modifier
 			.padding(horizontal = 10.dp)
 			.clip(MaterialTheme.shapes.medium)
-			.background(MaterialTheme.colorScheme.primary)
-			.clickable(interactionSource, indication) { onClick() }
+			.background(backgroundTint)
+			.clickable(interactionSource, indication, enabled) { onClick() }
 			.padding(10.dp),
 		verticalAlignment = Alignment.CenterVertically
 	) {
