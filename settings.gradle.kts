@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Capsule"
 include(":app")
- 
+include(":domain")
+include(":data")

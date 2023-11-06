@@ -23,12 +23,6 @@
     <string name="prev_button">Previous question</string>
     <string name="submit">SUBMIT</string>
     <string name="score_text">Score: </string>
-    <string name="not_good">Not good.\nYou can do better.</string>
-    <string name="fair">A fair result with room for improvement.</string>
-    <string name="satisfactory">Satisfactory performance</string>
-    <string name="very_good">A very good result.\nWell-done!</string>
-    <string name="excellent">An excellent performance!\nYou were so close to acing it.</string>
-    <string name="congratulations">CONGRATULATIONS!\nYou aced it like you wrote it. 🥳</string>
     <string name="statistics">Statistics</string>
     <string name="number_of_questions">Number of questions: %d</string>
     <string name="questions_answered">Questions answered: %d</string>

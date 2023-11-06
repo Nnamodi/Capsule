@@ -25,6 +25,7 @@ android {
 	buildTypes {
 		release {
 			minifyEnabled true
+			shrinkResources true
 			proguardFiles(
 				getDefaultProguardFile("proguard-android-optimize.txt"),
 				"proguard-rules.pro"
@@ -79,8 +80,11 @@ dependencies {
 
 	// media_lib
 	implementation media3.exoplayer
-	implementation media3.session
 	implementation media3.ui
+
+	// module dependencies
+	implementation project(path: ":data")
+	implementation project(path: ":domain")
 
 	// splash_screen
 	implementation androidx.splashScreen

@@ -5,7 +5,6 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.roland.android.capsule.R
-import com.roland.android.capsule.util.Timing
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UtilityModule {
+object AppModule {
 
 	@Provides
 	@Singleton
@@ -26,7 +25,4 @@ object UtilityModule {
 		}
 	}
 
-	@Provides
-	@Singleton
-	fun providesTiming() = Timing()
 }

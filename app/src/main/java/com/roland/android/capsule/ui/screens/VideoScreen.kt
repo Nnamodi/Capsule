@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -35,6 +37,16 @@ fun VideoScreen(
 	screenIsVisible: Boolean,
 	navigateToNextScreen: () -> Unit
 ) {
+	val configuration = LocalConfiguration.current
+	val inMobileLandscape by remember(configuration) {
+		derivedStateOf {
+			configuration.screenWidthDp > configuration.screenHeightDp
+		}
+	}
+	val playerModifier = if (!inMobileLandscape) {
+		Modifier.fillMaxHeight(0.55f)
+	} else Modifier.fillMaxWidth(0.65f)
+
 	var lifecycle by remember {
 		mutableStateOf(Lifecycle.Event.ON_CREATE)
 	}
@@ -68,9 +80,7 @@ fun VideoScreen(
 						}
 					}
 				},
-				modifier = Modifier
-					.fillMaxHeight(0.55f)
-					.fillMaxWidth()
+				modifier = playerModifier
 					.padding(horizontal = 20.dp)
 					.background(Color.Black),
 				update = {
@@ -82,11 +92,13 @@ fun VideoScreen(
 			)
 		}
 
-		UpNextButton(
-			modifier = Modifier.fillMaxWidth(),
-			nextScreenTitle = R.string.notes,
-			nextScreenDescription = R.string.notes_description,
-			navigateToNextScreen = navigateToNextScreen
-		)
+		if (!inMobileLandscape) {
+			UpNextButton(
+				modifier = Modifier.fillMaxWidth(),
+				nextScreenTitle = R.string.notes,
+				nextScreenDescription = R.string.notes_description,
+				navigateToNextScreen = navigateToNextScreen
+			)
+		}
 	}
 }

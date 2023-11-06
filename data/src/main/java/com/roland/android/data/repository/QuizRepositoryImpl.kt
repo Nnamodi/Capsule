@@ -1,21 +1,19 @@
-package com.roland.android.capsule.repository
+package com.roland.android.data.repository
 
 import android.content.Context
-import com.roland.android.capsule.R
-import com.roland.android.capsule.data.Result
-import com.roland.android.capsule.data.UiState
-import com.roland.android.capsule.data.uiState
-import com.roland.android.capsule.util.Timing
+import com.roland.android.data.R
+import com.roland.android.data.states.QuizResult
+import com.roland.android.data.states.UiState
+import com.roland.android.data.states.uiState
+import com.roland.android.domain.repository.QuizRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class QuizRepositoryImpl @Inject constructor(
-	@ApplicationContext private val context: Context,
-	private val timing: Timing
+	@ApplicationContext private val context: Context
 ) : QuizRepository {
 	override fun start() {
-		timing.start()
 		uiState.update { it.copy(quizStarted = true) }
 	}
 
@@ -46,22 +44,18 @@ class QuizRepositoryImpl @Inject constructor(
 		val correctAnswers = questions.filter { it.selectedOption == it.answer }.size
 		val divisor = 100.0 / questions.size
 		val score = correctAnswers * divisor
-		val result = Result(
+		val result = QuizResult(
 			remark = score.getRemark(),
 			score = "$score%",
 			answeredQuestions = answeredQuestions,
 			correctAnswers = correctAnswers
 		)
-
-		timing.pause()
 		uiState.update { it.copy(result = result) }
 	}
 
 	override fun reset() {
 		val refreshedQuestions = uiState.value.quizQuestions
 		refreshedQuestions.forEach { it.selectedOption = null }
-
-		timing.restart()
 		uiState.value = UiState(refreshedQuestions, quizStarted = true)
 	}
 

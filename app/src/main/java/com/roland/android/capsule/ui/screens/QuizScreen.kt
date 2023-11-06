@@ -31,7 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
 import com.roland.android.capsule.data.UiState
-import com.roland.android.capsule.data.questions
 import com.roland.android.capsule.ui.components.CustomButton
 import com.roland.android.capsule.ui.components.CustomIconButton
 import com.roland.android.capsule.ui.components.Option
@@ -39,6 +38,7 @@ import com.roland.android.capsule.ui.components.QuestionsTag
 import com.roland.android.capsule.ui.dialog.HelpDialog
 import com.roland.android.capsule.ui.theme.CapsuleTheme
 import com.roland.android.capsule.util.Actions
+import com.roland.android.data.data_source.questions
 
 @Composable
 fun QuizScreen(
@@ -46,9 +46,9 @@ fun QuizScreen(
 	actions: (Actions) -> Unit,
 	navigateToAnotherScreen: (Int?) -> Unit
 ) {
-	val (questions, currentQuestion, result) = uiState
+	val (questions, currentQuestion, result, _, time) = uiState
 	var selectedOption by remember(currentQuestion, result) { mutableStateOf(currentQuestion.selectedOption) }
-	val openHelpDialog = remember { mutableStateOf(false) }
+	val openHelpDialog = remember(time.timeUp) { mutableStateOf(false) }
 	var answerToCurrentQuestion by remember(result) { mutableStateOf("") }
 
 	Column(
@@ -137,7 +137,7 @@ private fun BottomButtons(
 	showAnswer: (String) -> Unit,
 	navigateToAnotherScreen: (Int?) -> Unit
 ) {
-	val (_, currentQuestion, result, quizHalfFinished) = uiState
+	val (questions, currentQuestion, result, quizHalfFinished) = uiState
 
 	Row(
 		modifier = Modifier

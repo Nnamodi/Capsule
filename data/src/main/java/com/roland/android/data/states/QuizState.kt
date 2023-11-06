@@ -1,9 +1,8 @@
-package com.roland.android.capsule.data
+package com.roland.android.data.states
 
 import com.roland.android.data.data_source.questions
-import com.roland.android.data.states.QuizResult
-import com.roland.android.data.states.TimeState
 import com.roland.android.domain.entity.Question
+import kotlinx.coroutines.flow.MutableStateFlow
 
 data class UiState(
 	val quizQuestions: MutableList<Question> = questions,
@@ -13,3 +12,7 @@ data class UiState(
 	val time: TimeState = TimeState(),
 	val quizStarted: Boolean = false,
 )
+
+val uiState = MutableStateFlow(UiState())
+
+val time = MutableStateFlow(TimeState())

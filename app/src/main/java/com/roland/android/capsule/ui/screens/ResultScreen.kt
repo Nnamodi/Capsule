@@ -32,11 +32,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.roland.android.capsule.R
-import com.roland.android.capsule.data.Result
 import com.roland.android.capsule.data.UiState
 import com.roland.android.capsule.ui.components.CustomButton
 import com.roland.android.capsule.ui.theme.CapsuleTheme
 import com.roland.android.capsule.util.Actions
+import com.roland.android.data.R.string
+import com.roland.android.data.states.QuizResult
 
 @Composable
 fun ResultScreen(
@@ -189,8 +190,8 @@ private fun NoResult() {
 @Composable
 private fun ResultScreenPreview() {
 	CapsuleTheme {
-		val result = Result(
-			remark = stringResource(R.string.excellent),
+		val result = QuizResult(
+			remark = stringResource(string.excellent),
 			score = "85.0%",
 			answeredQuestions = 5,
 			correctAnswers = 4

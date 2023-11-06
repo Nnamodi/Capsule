@@ -1,18 +1,17 @@
-package com.roland.android.capsule.util
+package com.roland.android.data.repository
 
-import com.roland.android.capsule.data.Time
-import com.roland.android.capsule.util.Constant.ALLOTTED_TIME_MILLIS
+import com.roland.android.data.states.time
+import com.roland.android.data.util.Constant.ALLOTTED_TIME_MILLIS
+import com.roland.android.domain.repository.TimerRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class Timing {
-	val time = MutableStateFlow(Time())
-
+class TimerRepositoryImpl @Inject constructor() : TimerRepository {
 	private var coroutineScope = CoroutineScope(Dispatchers.Main)
 	private var isActive = false
 
@@ -20,14 +19,14 @@ class Timing {
 	private var lastTimeStamp = 0L
 	private var timeLeft = ALLOTTED_TIME_MILLIS
 
-	fun start() {
+	override fun start() {
 		if (isActive) return
 
 		coroutineScope.launch {
 			lastTimeStamp = System.currentTimeMillis()
-			this@Timing.isActive = true
+			this@TimerRepositoryImpl.isActive = true
 
-			while(this@Timing.isActive) {
+			while(this@TimerRepositoryImpl.isActive) {
 				if (timeLeft <= 0L) {
 					pause(true); return@launch
 				}
@@ -46,12 +45,12 @@ class Timing {
 		}
 	}
 
-	fun pause(timeUp: Boolean = false) {
+	override fun pause(timeUp: Boolean) {
 		isActive = false
 		time.update { it.copy(timeUp = timeUp) }
 	}
 
-	fun restart() {
+	override fun restart() {
 		coroutineScope.cancel()
 		coroutineScope = CoroutineScope(Dispatchers.Main)
 		timeLeft = ALLOTTED_TIME_MILLIS
@@ -63,7 +62,11 @@ class Timing {
 	private fun Long.formatTime(): String  {
 		val minutes = ((this / 1000) / 60) % 60
 		val second = (this / 1000) % 60
-		val seconds = if (second < 10) "0$second" else "$second"
+		val seconds = when {
+			second < 0 -> "00"
+			second < 10 -> "0$second"
+			else -> "$second"
+		}
 		return "$minutes:$seconds min"
 	}
 }

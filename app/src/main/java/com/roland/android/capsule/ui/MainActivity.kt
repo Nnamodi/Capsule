@@ -11,8 +11,8 @@ import com.roland.android.capsule.R
 import com.roland.android.capsule.ui.dialog.WelcomeDialog
 import com.roland.android.capsule.ui.screens.Capsule
 import com.roland.android.capsule.ui.theme.CapsuleTheme
-import com.roland.android.capsule.util.Constant.ALLOTTED_TIME_MILLIS
 import com.roland.android.capsule.viewModel.QuizViewModel
+import com.roland.android.data.util.Constant.ALLOTTED_TIME_MILLIS
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

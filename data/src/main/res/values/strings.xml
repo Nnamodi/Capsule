@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="not_good">Not good.\nYou can do better.</string>
+    <string name="fair">A fair result with room for improvement.</string>
+    <string name="satisfactory">Satisfactory performance</string>
+    <string name="very_good">A very good result.\nWell-done!</string>
+    <string name="excellent">An excellent performance!\nYou were so close to acing it.</string>
+    <string name="congratulations">CONGRATULATIONS!\nYou aced it like you wrote it. 🥳</string>
+</resources>

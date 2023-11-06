@@ -1,4 +1,4 @@
-package com.roland.android.capsule.repository
+package com.roland.android.domain.repository
 
 interface QuizRepository {
 
