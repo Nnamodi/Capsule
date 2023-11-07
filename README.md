@@ -9,16 +9,19 @@ Based on a challenge
 |![Splash screen](screenshots/splash_screen.png)|![Video screen](screenshots/video_screen.png)|![Notes screen](screenshots/notes_screen.png)|![Quiz screen](screenshots/quiz_screen.png)|![Result screen](screenshots/result_screen.png)|
 
 ## About
-* The app shows a video, a note (discussing more on the video).
+* The app shows a video, then a note (discussing more on the video).
 * After which, the user is presented with a set of questions from either the video, note or general knowledge.
 * The user starts with a 10 minutes countdown and is expected to finish the quiz (all screens) within the allotted time.
 * Users also get to see their performance either after submitting their answers, or when the countdown is done. Then they will be given the opportunity to reset and restart the process.
 
 * This project follows the MVVM structure with Clean Architecture.
 
-    There are three _modules_ in the project
+    There are three _modules_ in the project:
+
     `app` - The user interface and communication layer. The main module
+
     `domain` - An android library housing the entities and use-cases
+
     `data` - Responsible for creating and managing data
 
 ## Developed with
