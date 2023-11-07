@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.core.view.WindowCompat.setDecorFitsSystemWindows
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.roland.android.capsule.R
 import com.roland.android.capsule.ui.dialog.WelcomeDialog
 import com.roland.android.capsule.ui.screens.Capsule
 import com.roland.android.capsule.ui.theme.CapsuleTheme
@@ -17,6 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		setDecorFitsSystemWindows(window, false)
+		setTheme(R.style.Theme_Capsule)
 		setContent {
 			CapsuleTheme {
 				val viewModel: QuizViewModel = hiltViewModel()

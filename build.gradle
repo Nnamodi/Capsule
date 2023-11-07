@@ -17,6 +17,7 @@ buildscript {
 			lifecycle : "2.6.2",
 			material3 : "1.1.0",
 			media3 : "1.0.1",
+			splash_screen : '1.0.0',
 			espresso_core : "3.5.1",
 			junit : "4.13.2"
 		]
@@ -27,7 +28,8 @@ buildscript {
 			composeUiGraphics : "androidx.compose.ui:ui-graphics",
 			composeUiToolingPreview : "androidx.compose.ui:ui-tooling-preview",
 			core : "androidx.core:core-ktx:${versions.core_ktx}",
-			lifecycle : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}"
+			lifecycle : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}",
+			splashScreen : "androidx.core:core-splashscreen:${versions.splash_screen}"
 		]
 		di = [
 			hiltAndroid : "com.google.dagger:hilt-android:${versions.hilt}",

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="primary_color">#FFFFFFFF</color>
-    <color name="on_primary_color">#002E69</color>
-    <color name="app_icon_background">#002E69</color>
+    <color name="primary_color">#002E69</color>
+    <color name="on_primary_color">#FFFFFFFF</color>
 
     // App theme
     <style name="Theme.Capsule" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
     </style>
 
     // Splash screen theme
@@ -18,7 +17,7 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/app_logo</item>
         <item name="android:windowSplashScreenBehavior" tools:targetApi="tiramisu">icon_preferred</item>
         <item name="postSplashScreenTheme">@style/Theme.Capsule</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
     </style>
 </resources>

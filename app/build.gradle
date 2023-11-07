@@ -82,6 +82,9 @@ dependencies {
 	implementation media3.session
 	implementation media3.ui
 
+	// splash_screen
+	implementation androidx.splashScreen
+
 	// unit testing
 	testImplementation test.junit
 	androidTestImplementation androidTest.espressoCore
